@@ -1,0 +1,94 @@
+<section class="min-h-screen bg-gray-50">
+  <div class="container mx-auto px-4 py-8">
+
+    <!-- Addresses Section -->
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-xl font-semibold text-gray-900">Saved Addresses</h2>
+      <button (click)="openModal()" class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors">
+        <i class="fa-solid fa-plus"></i>
+        <span>Add New Address</span>
+      </button>
+    </div>
+
+    @if ((addresses$ | async); as res) {
+      @if (res.data && res.data.length) {
+        <div class="grid md:grid-cols-2 gap-4">
+          @for (address of res.data; track address._id) {
+            <div class="p-6 border rounded-xl bg-white">
+              <div class="flex items-start justify-between mb-4">
+                <div>
+                  <h3 class="font-semibold text-gray-900">{{ address.name }}</h3>
+                  <span class="inline-flex items-center px-2 py-1 text-xs font-medium rounded-full bg-emerald-100 text-emerald-800">Default</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button class="text-gray-400 hover:text-gray-600">
+                    <i class="fa-solid fa-edit"></i>
+                  </button>
+                  <button class="text-red-500 hover:text-red-600" (click)="remove(address._id)">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="text-gray-700">
+                <p>{{ address.details }}</p>
+                <p>{{ address.city }}</p>
+                <p class="mt-2 text-sm text-gray-600">{{ address.phone }}</p>
+              </div>
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="text-center py-12 bg-white rounded-xl border">
+          <i class="fa-solid fa-location-dot text-4xl text-gray-300 mb-4"></i>
+          <h3 class="text-lg font-semibold text-gray-600 mb-2">No addresses saved</h3>
+          <p class="text-gray-500 mb-4">Add your first address to get started</p>
+          <button (click)="openModal()" class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors">
+            <i class="fa-solid fa-plus"></i>
+            <span>Add Address</span>
+          </button>
+        </div>
+      }
+    } @else {
+      <div class="text-center py-12">
+        <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600"></div>
+        <p class="mt-2 text-gray-600">Loading addresses...</p>
+      </div>
+    }
+
+    <!-- Add Address Modal -->
+    @if (isModalOpen()) {
+      <div class="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
+        <div class="bg-white w-full max-w-lg rounded-xl p-6 shadow-xl">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold">Add Address</h3>
+            <button (click)="closeModal()" class="text-gray-500 hover:text-gray-700"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+          <form [formGroup]="form" (ngSubmit)="submit()" class="grid grid-cols-1 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+              <input class="w-full rounded-md border px-3 py-2" formControlName="name" placeholder="Home / Office" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Details</label>
+              <textarea class="w-full rounded-md border px-3 py-2" formControlName="details" placeholder="Street, building, apartment"></textarea>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                <input class="w-full rounded-md border px-3 py-2" formControlName="phone" placeholder="01xxxxxxxxx" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">City</label>
+                <input class="w-full rounded-md border px-3 py-2" formControlName="city" placeholder="Cairo" />
+              </div>
+            </div>
+            <div class="flex items-center justify-end gap-2 pt-2">
+              <button type="button" (click)="closeModal()" class="px-4 py-2 rounded-md border">Cancel</button>
+              <button type="submit" [disabled]="form.invalid" class="px-4 py-2 rounded-md bg-emerald-600 text-white disabled:opacity-50">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    }
+  </div>
+</section>

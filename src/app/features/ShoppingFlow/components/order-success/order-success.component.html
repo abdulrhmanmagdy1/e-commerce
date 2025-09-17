@@ -1,0 +1,52 @@
+<div class="min-h-screen bg-gray-50 flex items-center justify-center py-12">
+    <div class="max-w-md w-full mx-auto">
+        @if (loading()) {
+        <div class="text-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto"></div>
+            <p class="mt-4 text-gray-600">Processing your order...</p>
+        </div>
+        } @else {
+        <div class="bg-white rounded-lg shadow-lg p-8 text-center">
+            <!-- Success Icon -->
+            <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-emerald-100 mb-6">
+                <i class="fa-solid fa-check text-3xl text-emerald-600"></i>
+            </div>
+
+            <!-- Success Message -->
+            <h1 class="text-2xl font-bold text-gray-900 mb-4">Order Placed Successfully!</h1>
+            <p class="text-gray-600 mb-6">
+                Thank you for your purchase. Your order has been confirmed and will be processed shortly.
+            </p>
+
+            @if (orderId()) {
+            <div class="bg-gray-50 rounded-lg p-4 mb-6">
+                <p class="text-sm text-gray-600">Order ID</p>
+                <p class="font-mono text-lg font-semibold text-gray-900">{{ orderId() }}</p>
+            </div>
+            }
+
+            <!-- Action Buttons -->
+            <div class="space-y-3">
+                <button (click)="goToOrders()"
+                    class="w-full bg-emerald-600 text-white py-3 px-6 rounded-md font-semibold hover:bg-emerald-700 transition-colors">
+                    <i class="fa-solid fa-list mr-2"></i>
+                    View My Orders
+                </button>
+
+                <button (click)="continueShopping()"
+                    class="w-full bg-gray-100 text-gray-700 py-3 px-6 rounded-md font-semibold hover:bg-gray-200 transition-colors">
+                    <i class="fa-solid fa-shopping-bag mr-2"></i>
+                    Continue Shopping
+                </button>
+            </div>
+
+            <!-- Additional Info -->
+            <div class="mt-8 pt-6 border-t border-gray-200">
+                <p class="text-sm text-gray-500">
+                    You will receive an email confirmation shortly with your order details and tracking information.
+                </p>
+            </div>
+        </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,35 @@
+// Checkout component styles
+.checkout-container {
+    min-height: 100vh;
+    background-color: #f9fafb;
+}
+
+.form-input {
+    transition: all 0.2s ease-in-out;
+
+    &:focus {
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    }
+}
+
+.submit-button {
+    transition: all 0.2s ease-in-out;
+
+    &:hover:not(:disabled) {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+}
+
+.order-summary {
+    position: sticky;
+    top: 1rem;
+}
+
+.cart-item {
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+        transform: translateX(2px);
+    }
+}

@@ -1,0 +1,19 @@
+<section class="bg-white">
+  <div class="container mx-auto px-4 py-10">
+    @if ((brand$ | async); as res) {
+      <div class="max-w-xl mx-auto border rounded-2xl p-6 text-center shadow-sm">
+        <div class="mx-auto h-28 w-28 rounded-full overflow-hidden ring-2 ring-emerald-100">
+          <img [src]="res.data?.image || '/images/img6.avif'" [alt]="res.data?.name || 'Brand'" class="h-full w-full object-cover" />
+        </div>
+        <h1 class="mt-4 text-2xl md:text-3xl font-extrabold text-gray-900">{{ res.data?.name }}</h1>
+        <div class="mt-6">
+          <a routerLink="/products" [queryParams]="{ brand: res.data?._id }"
+             class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700">
+            View products
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    }
+  </div>
+</section>

@@ -1,0 +1,125 @@
+<header class="bg-white/80 backdrop-blur sticky top-0 z-50 border-b">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between py-3">
+            <!-- Logo -->
+            <a routerLink="/home" class="flex items-center gap-2">
+                <img src="/images/freshcart-logo.svg" alt="Freshcart" class="h-8 w-auto" />
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+                <a routerLink="/home" routerLinkActive="text-emerald-600" class="hover:text-emerald-600">{{ 'home' | t }}</a>
+                <a routerLink="/products" routerLinkActive="text-emerald-600" class="hover:text-emerald-600">{{ 'products' | t }}</a>
+                <a routerLink="/categories" routerLinkActive="text-emerald-600" class="hover:text-emerald-600">{{ 'categories' | t }}</a>
+                <a routerLink="/brands" routerLinkActive="text-emerald-600" class="hover:text-emerald-600">{{ 'brands' | t }}</a>
+                <a routerLink="/wishlist" routerLinkActive="text-emerald-600" class="hover:text-emerald-600">{{ 'wishlist' | t }}</a>
+                <a routerLink="/about" routerLinkActive="text-emerald-600" class="hover:text-emerald-600">{{ 'about' | t }}</a>
+                <a routerLink="/contact" routerLinkActive="text-emerald-600" class="hover:text-emerald-600">{{ 'contact' | t }}</a>
+                <a routerLink="/faq" routerLinkActive="text-emerald-600" class="hover:text-emerald-600">{{ 'faq' | t }}</a>
+            </nav>
+
+            <!-- Actions -->
+            <div class="flex items-center gap-4">
+                <!-- Social Media Icons -->
+                <div class="hidden sm:flex items-center gap-3">
+                    <a href="#" class="text-gray-600 hover:text-emerald-600 transition-colors">
+                        <i class="fa-brands fa-facebook text-lg"></i>
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-emerald-600 transition-colors">
+                        <i class="fa-brands fa-twitter text-lg"></i>
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-emerald-600 transition-colors">
+                        <i class="fa-brands fa-instagram text-lg"></i>
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-emerald-600 transition-colors">
+                        <i class="fa-brands fa-linkedin text-lg"></i>
+                    </a>
+                </div>
+
+                <!-- Language toggle (desktop) -->
+                <button type="button" (click)="toggleLang()" class="hidden md:inline-flex items-center gap-2 h-9 px-3 rounded-md border hover:bg-gray-50">
+                  <i class="fa-solid fa-globe"></i>
+                  <span class="text-sm">{{ i18n.lang() === 'ar' ? 'language_en' : 'language_ar' | t }}</span>
+                </button>
+
+                <!-- Account -->
+                @if (!isLoggedIn()) {
+                <a routerLink="/login" class="inline-flex items-center gap-2 hover:text-emerald-600">
+                    <i class="fa-regular fa-user"></i>
+                    <span class="hidden lg:inline">{{ 'sign_in' | t }}</span>
+                </a>
+                } @else {
+                <div class="flex items-center gap-3">
+                    <a routerLink="/account/overview" class="inline-flex items-center gap-2 hover:text-emerald-600">
+                        <i class="fa-solid fa-user"></i>
+                        <span class="hidden lg:inline">{{ 'dashboard' | t }}</span>
+                    </a>
+                    <button type="button" (click)="logout()" class="inline-flex items-center gap-2 hover:text-red-600">
+                        <i class="fa-solid fa-sign-out-alt"></i>
+                        <span class="hidden lg:inline">{{ 'logout' | t }}</span>
+                    </button>
+                </div>
+                }
+
+                <!-- Cart -->
+                <a routerLink="/cart" class="relative inline-flex items-center hover:text-emerald-600">
+                    <i class="fa-solid fa-cart-shopping text-xl"></i>
+                    <span class="sr-only">{{ 'cart' | t }}</span>
+                    <span class="absolute -top-2 -right-2 bg-emerald-600 text-white text-xs rounded-full px-1.5">{{ cart.count() }}</span>
+                </a>
+
+                <!-- Mobile menu button -->
+                <button type="button" (click)="toggleMobileMenu()"
+                    class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-md border">
+                    <i class="fa-solid" [ngClass]="isMobileMenuOpen ? 'fa-xmark' : 'fa-bars'"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Nav -->
+        @if (isMobileMenuOpen) {
+        <div class="md:hidden border-t pb-4">
+            <nav class="flex flex-col gap-3 pt-3 text-sm font-medium">
+                <a (click)="toggleMobileMenu()" routerLink="/home" routerLinkActive="text-emerald-600">{{ 'home' | t }}</a>
+                <a (click)="toggleMobileMenu()" routerLink="/products" routerLinkActive="text-emerald-600">{{ 'products' | t }}</a>
+                <a (click)="toggleMobileMenu()" routerLink="/categories" routerLinkActive="text-emerald-600">{{ 'categories' | t }}</a>
+                <a (click)="toggleMobileMenu()" routerLink="/brands" routerLinkActive="text-emerald-600">{{ 'brands' | t }}</a>
+                <a (click)="toggleMobileMenu()" routerLink="/wishlist" routerLinkActive="text-emerald-600">{{ 'wishlist' | t }}</a>
+                <a (click)="toggleMobileMenu()" routerLink="/about" routerLinkActive="text-emerald-600">{{ 'about' | t }}</a>
+                <a (click)="toggleMobileMenu()" routerLink="/contact" routerLinkActive="text-emerald-600">{{ 'contact' | t }}</a>
+                <a (click)="toggleMobileMenu()" routerLink="/faq" routerLinkActive="text-emerald-600">{{ 'faq' | t }}</a>
+                <div class="flex items-center gap-4 pt-2">
+                    @if (!isLoggedIn()) {
+                    <a (click)="toggleMobileMenu()" routerLink="/login" class="inline-flex items-center gap-2">
+                        <i class="fa-regular fa-user"></i>
+                        <span>{{ 'sign_in' | t }}</span>
+                    </a>
+                    } @else {
+                    <div class="flex items-center gap-3">
+                        <a (click)="toggleMobileMenu()" routerLink="/account/overview" class="inline-flex items-center gap-2">
+                            <i class="fa-solid fa-user"></i>
+                            <span>{{ 'dashboard' | t }}</span>
+                        </a>
+                        <button type="button" (click)="logout(); toggleMobileMenu()"
+                            class="inline-flex items-center gap-2 text-red-600">
+                            <i class="fa-solid fa-sign-out-alt"></i>
+                            <span>{{ 'logout' | t }}</span>
+                        </button>
+                    </div>
+                    }
+                    <a (click)="toggleMobileMenu()" routerLink="/cart" class="inline-flex items-center gap-2">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span>{{ 'cart' | t }}</span>
+                    </a>
+                </div>
+            </nav>
+            <div class="md:hidden pt-3">
+              <button type="button" (click)="toggleLang()" class="inline-flex items-center gap-2 h-9 px-3 rounded-md border w-full justify-center bg-white">
+                <i class="fa-solid fa-globe"></i>
+                <span class="text-sm">{{ i18n.lang() === 'ar' ? 'language_en' : 'language_ar' | t }}</span>
+              </button>
+            </div>
+        </div>
+        }
+    </div>
+</header>

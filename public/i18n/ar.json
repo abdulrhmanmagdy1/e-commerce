@@ -1,0 +1,27 @@
+{
+  "home": "الرئيسية",
+  "products": "المنتجات",
+  "categories": "الأقسام",
+  "brands": "الماركات",
+  "wishlist": "المفضلة",
+  "about": "من نحن",
+  "contact": "اتصل بنا",
+  "faq": "الأسئلة الشائعة",
+  "sign_in": "تسجيل الدخول",
+  "dashboard": "لوحة التحكم",
+  "logout": "تسجيل الخروج",
+  "cart": "العربة",
+
+  "welcome_back": "مرحباً بعودتك، {{name}}!",
+  "manage_account": "إدارة حسابك وتتبع طلباتك",
+
+  "overview": "نظرة عامة",
+  "orders": "الطلبات",
+  "addresses": "العناوين",
+  "payments": "الدفع",
+  "profile": "الملف الشخصي",
+
+  "language": "اللغة",
+  "language_en": "English",
+  "language_ar": "العربية"
+}

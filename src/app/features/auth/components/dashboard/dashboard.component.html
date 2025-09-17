@@ -1,0 +1,105 @@
+<section class="min-h-screen bg-gray-50">
+    <div class="container mx-auto px-4 py-8">
+
+
+        <!-- Statistics Cards -->
+        @if ((dashboardData$ | async); as data) {
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <!-- Total Orders Card -->
+            <div class="p-6 rounded-xl border bg-white">
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-check text-emerald-600"></i>
+                    </div>
+                </div>
+                <div class="text-2xl font-bold text-gray-900">{{ data.totalOrders }}</div>
+                <div class="text-sm text-gray-600">Total Orders</div>
+            </div>
+
+            <!-- In Transit Card -->
+            <div class="p-6 rounded-xl border bg-white">
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-truck text-blue-600"></i>
+                    </div>
+                </div>
+                <div class="text-2xl font-bold text-gray-900">{{ data.inTransit }}</div>
+                <div class="text-sm text-gray-600">In Transit</div>
+            </div>
+
+            <!-- Wishlist Items Card -->
+            <div class="p-6 rounded-xl border bg-white">
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-heart text-purple-600"></i>
+                    </div>
+                </div>
+                <div class="text-2xl font-bold text-gray-900">{{ data.wishlistItems }}</div>
+                <div class="text-sm text-gray-600">Wishlist Items</div>
+            </div>
+
+            <!-- Total Spent Card -->
+            <div class="p-6 rounded-xl border bg-white">
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-dollar-sign text-orange-600"></i>
+                    </div>
+                </div>
+                <div class="text-2xl font-bold text-gray-900">${{ data.totalSpent.toFixed(0) }}</div>
+                <div class="text-sm text-gray-600">Total Spent</div>
+            </div>
+        </div>
+
+        <!-- Recent Orders Section -->
+        <div class="bg-white rounded-xl border p-6">
+            <h2 class="text-lg font-semibold text-gray-900 mb-4">Recent Orders</h2>
+
+            @if (data.recentOrders.length > 0) {
+            <div class="space-y-4">
+                @for (order of data.recentOrders; track order._id) {
+                <div class="flex items-center justify-between p-4 border rounded-lg">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-box text-gray-600 text-sm"></i>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-gray-900">FC-2025-{{ order._id.slice(-6) }}</div>
+                            <div class="text-sm text-gray-600">{{ order.createdAt | date:'MMM d, y' }} • {{
+                                order.cartItems.length }} items</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full"
+                            [ngClass]="order.isDelivered ? 'bg-emerald-100 text-emerald-800' : 'bg-yellow-100 text-yellow-800'">
+                            {{ order.isDelivered ? 'Delivered' : 'Processing' }}
+                        </span>
+                        <div class="font-semibold text-gray-900">${{ order.totalOrderPrice.toFixed(2) }}</div>
+                        <a [routerLink]="['/orders', order._id]" class="text-gray-400 hover:text-gray-600">
+                            <i class="fa-solid fa-eye"></i>
+                        </a>
+                    </div>
+                </div>
+                }
+            </div>
+
+            <div class="text-center mt-6">
+                <a routerLink="/account/orders"
+                    class="inline-flex items-center px-6 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors">
+                    View All Orders
+                </a>
+            </div>
+            } @else {
+            <div class="text-center py-8 text-gray-600">
+                <i class="fa-solid fa-box text-4xl mb-4"></i>
+                <p>No orders yet</p>
+            </div>
+            }
+        </div>
+        } @else {
+        <div class="text-center py-12">
+            <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600"></div>
+            <p class="mt-2 text-gray-600">Loading dashboard...</p>
+        </div>
+        }
+    </div>
+</section>

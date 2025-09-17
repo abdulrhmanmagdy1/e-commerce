@@ -1,0 +1,72 @@
+<section class="bg-white">
+    <div class="container mx-auto px-4 py-12 max-w-md">
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Create account</h1>
+        <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium mb-1">Full name</label>
+                <input type="text" formControlName="name"
+                    class="w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-600"
+                    placeholder="John Doe" />
+                @if (form.get('name')?.touched && form.get('name')?.invalid) {
+                <p class="mt-1 text-sm text-red-600">Name
+                    is required.</p>
+                }
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium mb-1">Email</label>
+                <input type="email" formControlName="email"
+                    class="w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-600"
+                    placeholder="you@example.com" />
+                @if (form.get('email')?.touched && form.get('email')?.invalid) {
+                <p class="mt-1 text-sm text-red-600">
+                    Valid email is required.</p>
+                }
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium mb-1">Phone (optional)</label>
+                <input type="text" formControlName="phone"
+                    class="w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-600"
+                    placeholder="+1 555 123 4567" />
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium mb-1">Password</label>
+                <input type="password" formControlName="password"
+                    class="w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-600"
+                    placeholder="••••••••" />
+                @if (form.get('password')?.touched && form.get('password')?.invalid) {
+                <p class="mt-1 text-sm text-red-600">Minimum 6 characters.</p>
+                }
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium mb-1">Confirm password</label>
+                <input type="password" formControlName="rePassword"
+                    class="w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-600"
+                    placeholder="••••••••" />
+                @if (form.errors?.['passwordMismatch'] && (form.get('rePassword')?.touched ||
+                form.get('password')?.touched)) {
+                <p class="mt-1 text-sm text-red-600">
+                    Passwords do not match.</p>
+                }
+            </div>
+
+            <button type="submit"
+                class="w-full inline-flex justify-center items-center gap-2 px-4 py-2 rounded-md bg-emerald-600 text-white hover:bg-emerald-700 disabled:opacity-50"
+                [disabled]="form.invalid || loading()">
+                <i class="fa-solid fa-user-plus"></i>
+                <span>{{ loading() ? 'Creating...' : 'Create account' }}</span>
+            </button>
+
+            @if (serverError()) {
+            <p class="text-sm text-red-600">{{ serverError() }}</p>
+            }
+
+            <p class="text-sm text-gray-600">Already have an account?
+                <a routerLink="/login" class="text-emerald-700 hover:underline">Sign in</a>
+            </p>
+        </form>
+    </div>
+</section>

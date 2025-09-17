@@ -1,0 +1,59 @@
+@if ((cart$ | async); as res) {
+<section class="bg-white">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">Your cart</h1>
+
+        @if (res.data.products && res.data.products.length) {
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="md:col-span-2 space-y-4">
+                @for (it of res.data.products; track it.product._id) {
+                <div class="flex items-center gap-4 p-4 border rounded-xl">
+                    <img [src]="it.product.imageCover || '/images/img2.avif'"
+                        class="w-20 h-20 object-cover rounded-lg border" />
+                    <div class="flex-1">
+                        <a [routerLink]="['/product', it.product._id]" class="font-medium text-gray-900 line-clamp-2">{{
+                            it.product.title }}</a>
+                        <div class="text-emerald-700 font-semibold">{{ (it.price) | currency }}</div>
+                        <div class="mt-2 inline-flex items-center gap-2">
+                            <button type="button" class="h-8 w-8 rounded-md border"
+                                (click)="dec(it.product._id, it.count)">-</button>
+                            <span class="w-8 text-center">{{ it.count }}</span>
+                            <button type="button" class="h-8 w-8 rounded-md border"
+                                (click)="inc(it.product._id, it.count)">+</button>
+                            <button type="button" class="ml-4 text-red-600 hover:underline"
+                                (click)="remove(it.product._id)">Remove</button>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+            <aside class="p-4 border rounded-xl h-fit">
+                <div class="flex items-center justify-between text-gray-700">
+                    <span>Items</span>
+                    <span>{{ res.data.products.length }}</span>
+                </div>
+                <div class="flex items-center justify-between text-gray-900 font-semibold mt-2">
+                    <span>Total</span>
+                    <span>{{ res.data.totalCartPrice | currency }}</span>
+                </div>
+                <a routerLink="/checkout"
+                    class="w-full mt-4 inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-emerald-600 text-white hover:bg-emerald-700">
+                    <i class="fa-solid fa-credit-card"></i>
+                    <span>Checkout</span>
+                </a>
+                <button type="button"
+                    class="w-full mt-2 inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md border hover:bg-gray-50"
+                    (click)="clear()">
+                    <i class="fa-regular fa-trash-can"></i>
+                    <span>Clear cart</span>
+                </button>
+            </aside>
+        </div>
+        }
+
+        @if (!(res.data.products && res.data.products.length)) {
+        <div class="text-center text-gray-600">Your cart is empty.</div>
+        }
+    </div>
+</section>
+}

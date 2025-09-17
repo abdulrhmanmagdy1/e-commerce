@@ -1,0 +1,191 @@
+<div class="min-h-screen bg-gray-50 py-8">
+    <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+            <!-- Header -->
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900">Checkout</h1>
+                <p class="text-gray-600 mt-2">Complete your order by providing shipping details</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Shipping Form -->
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-lg shadow-sm p-6">
+                        <h2 class="text-xl font-semibold text-gray-900 mb-6">Shipping Information</h2>
+
+                        <!-- Address mode toggle -->
+                        <div class="mb-4 inline-flex rounded-lg border bg-gray-50 p-1">
+                          <button type="button" (click)="selectMode('saved')"
+                                  class="px-3 py-1.5 rounded-md text-sm"
+                                  [class.bg-white]="selectedMode() === 'saved'"
+                                  [class.shadow-sm]="selectedMode() === 'saved'">
+                            Saved addresses
+                          </button>
+                          <button type="button" (click)="selectMode('new')"
+                                  class="px-3 py-1.5 rounded-md text-sm"
+                                  [class.bg-white]="selectedMode() === 'new'"
+                                  [class.shadow-sm]="selectedMode() === 'new'">
+                            New address
+                          </button>
+                        </div>
+
+                        <!-- Saved addresses list -->
+                        @if (selectedMode() === 'saved') {
+                          <div class="space-y-3 mb-6">
+                            @if (savedAddresses().length) {
+                              @for (addr of savedAddresses(); track addr._id) {
+                                <label class="flex items-start gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                  <input type="radio" name="selAddr" [checked]="selectedAddressId() === addr._id" (change)="selectAddress(addr._id)" />
+                                  <div>
+                                    <div class="font-medium text-gray-900">{{ addr.name }}</div>
+                                    <div class="text-sm text-gray-600">{{ addr.details }}</div>
+                                    <div class="text-sm text-gray-500">{{ addr.city }} • {{ addr.phone }}</div>
+                                  </div>
+                                </label>
+                              }
+                            } @else {
+                              <div class="p-3 rounded-md bg-amber-50 text-amber-800 text-sm">No saved addresses. Please add one in your profile or enter a new address below.</div>
+                            }
+                          </div>
+                        }
+
+                        <form [formGroup]="shippingForm" (ngSubmit)="onSubmit()" class="space-y-6">
+                            <!-- Address Details -->
+                            <div>
+                                <label for="details" class="block text-sm font-medium text-gray-700 mb-2">
+                                    Address Details <span class="text-red-500">*</span>
+                                </label>
+                                <textarea id="details" formControlName="details" rows="3"
+                                    placeholder="Enter your full address with street, building, apartment details..."
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                                    [disabled]="selectedMode() === 'saved'"
+                                    [class.border-red-500]="shippingForm.get('details')?.invalid && shippingForm.get('details')?.touched">
+                </textarea>
+                                @if (shippingForm.get('details')?.invalid && shippingForm.get('details')?.touched) {
+                                <p class="text-red-500 text-sm mt-1">
+                                    @if (shippingForm.get('details')?.errors?.['required']) {
+                                    Address details are required
+                                    }
+                                    @if (shippingForm.get('details')?.errors?.['minlength']) {
+                                    Address must be at least 10 characters long
+                                    }
+                                </p>
+                                }
+                            </div>
+
+                            <!-- Phone Number -->
+                            <div>
+                                <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">
+                                    Phone Number <span class="text-red-500">*</span>
+                                </label>
+                                <input type="tel" id="phone" formControlName="phone" placeholder="01XXXXXXXXX"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                                    [disabled]="selectedMode() === 'saved'"
+                                    [class.border-red-500]="shippingForm.get('phone')?.invalid && shippingForm.get('phone')?.touched">
+                                @if (shippingForm.get('phone')?.invalid && shippingForm.get('phone')?.touched) {
+                                <p class="text-red-500 text-sm mt-1">
+                                    @if (shippingForm.get('phone')?.errors?.['required']) {
+                                    Phone number is required
+                                    }
+                                    @if (shippingForm.get('phone')?.errors?.['pattern']) {
+                                    Please enter a valid Egyptian phone number (01XXXXXXXXX)
+                                    }
+                                </p>
+                                }
+                            </div>
+
+                            <!-- City -->
+                            <div>
+                                <label for="city" class="block text-sm font-medium text-gray-700 mb-2">
+                                    City <span class="text-red-500">*</span>
+                                </label>
+                                <input type="text" id="city" formControlName="city" placeholder="Enter your city"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                                    [disabled]="selectedMode() === 'saved'"
+                                    [class.border-red-500]="shippingForm.get('city')?.invalid && shippingForm.get('city')?.touched">
+                                @if (shippingForm.get('city')?.invalid && shippingForm.get('city')?.touched) {
+                                <p class="text-red-500 text-sm mt-1">
+                                    @if (shippingForm.get('city')?.errors?.['required']) {
+                                    City is required
+                                    }
+                                    @if (shippingForm.get('city')?.errors?.['minlength']) {
+                                    City must be at least 2 characters long
+                                    }
+                                </p>
+                                }
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="pt-4">
+                                <button type="submit" [disabled]="shippingForm.invalid || loading()"
+                                    class="w-full bg-emerald-600 text-white py-3 px-6 rounded-md font-semibold hover:bg-emerald-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors">
+                                    @if (loading()) {
+                                    <i class="fa-solid fa-spinner fa-spin mr-2"></i>
+                                    Processing...
+                                    } @else {
+                                    <i class="fa-solid fa-credit-card mr-2"></i>
+                                    Proceed to Payment
+                                    }
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-lg shadow-sm p-6 sticky top-4">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Order Summary</h3>
+
+                        @if (cartData(); as cart) {
+                        <!-- Items Count -->
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-gray-600">Items ({{ getTotalItems() }})</span>
+                            <span class="font-semibold">{{ getTotalItems() }} items</span>
+                        </div>
+
+                        <!-- Cart Items -->
+                        <div class="space-y-3 mb-6">
+                            @for (item of cart.data.products; track item._id) {
+                            <div class="flex items-center space-x-3">
+                                <img [src]="item.product.imageCover || '/images/img1.avif'" [alt]="item.product.title"
+                                    class="w-12 h-12 object-cover rounded-md">
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-medium text-gray-900 truncate">{{ item.product.title }}</p>
+                                    <p class="text-xs text-gray-500">Qty: {{ item.count }}</p>
+                                </div>
+                                <p class="text-sm font-semibold text-gray-900">{{ item.price | currency }}</p>
+                            </div>
+                            }
+                        </div>
+
+                        <!-- Total -->
+                        <div class="border-t pt-4">
+                            <div class="flex justify-between items-center text-lg font-bold text-gray-900">
+                                <span>Total</span>
+                                <span>{{ getTotalPrice() | currency }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Payment Info -->
+                        <div class="mt-6 p-4 bg-gray-50 rounded-md">
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fa-solid fa-shield-alt mr-2 text-emerald-600"></i>
+                                <span>Secure payment powered by Stripe</span>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Back to Cart -->
+            <div class="mt-8 text-center">
+                <a routerLink="/cart" class="text-emerald-600 hover:text-emerald-700 font-medium">
+                    <i class="fa-solid fa-arrow-left mr-2"></i>
+                    Back to Cart
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

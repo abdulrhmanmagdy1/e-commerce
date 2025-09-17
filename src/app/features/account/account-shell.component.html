@@ -1,0 +1,43 @@
+<section class="bg-gray-50">
+  <div class="container mx-auto px-4 py-8">
+    <div class="flex items-center gap-4 mb-6">
+      <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
+        <span class="text-emerald-600 font-semibold text-lg">{{ userInitials }}</span>
+      </div>
+      <div>
+        <h1 class="text-2xl font-bold text-gray-900">{{ 'welcome_back' | t:{name: userName} }}</h1>
+        <p class="text-gray-600">{{ 'manage_account' | t }}</p>
+      </div>
+    </div>
+
+    <div class="flex gap-1 mb-8 bg-gray-100 p-1 rounded-lg w-fit">
+      <a routerLink="/account/overview" routerLinkActive="bg-white shadow-sm"
+         class="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all">
+        <i class="fa-solid fa-user w-4 h-4"></i>
+        <span>{{ 'overview' | t }}</span>
+      </a>
+      <a routerLink="/account/orders" routerLinkActive="bg-white shadow-sm"
+         class="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all">
+        <i class="fa-solid fa-box w-4 h-4"></i>
+        <span>{{ 'orders' | t }}</span>
+      </a>
+      <a routerLink="/account/addresses" routerLinkActive="bg-white shadow-sm"
+         class="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all">
+        <i class="fa-solid fa-location-dot w-4 h-4"></i>
+        <span>{{ 'addresses' | t }}</span>
+      </a>
+      <a routerLink="/account/payments" routerLinkActive="bg-white shadow-sm"
+         class="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all">
+        <i class="fa-solid fa-credit-card w-4 h-4"></i>
+        <span>{{ 'payments' | t }}</span>
+      </a>
+      <a routerLink="/account/profile" routerLinkActive="bg-white shadow-sm"
+         class="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all">
+        <i class="fa-solid fa-gear w-4 h-4"></i>
+        <span>{{ 'profile' | t }}</span>
+      </a>
+    </div>
+
+    <router-outlet></router-outlet>
+  </div>
+</section>

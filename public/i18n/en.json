@@ -1,0 +1,27 @@
+{
+  "home": "Home",
+  "products": "Products",
+  "categories": "Categories",
+  "brands": "Brands",
+  "wishlist": "Wishlist",
+  "about": "About",
+  "contact": "Contact",
+  "faq": "FAQ",
+  "sign_in": "Sign in",
+  "dashboard": "Dashboard",
+  "logout": "Logout",
+  "cart": "Cart",
+
+  "welcome_back": "Welcome back, {{name}}!",
+  "manage_account": "Manage your account and track your orders",
+
+  "overview": "Overview",
+  "orders": "Orders",
+  "addresses": "Addresses",
+  "payments": "Payments",
+  "profile": "Profile",
+
+  "language": "Language",
+  "language_en": "English",
+  "language_ar": "العربية"
+}
