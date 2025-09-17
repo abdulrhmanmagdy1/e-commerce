@@ -10,31 +10,31 @@
       </div>
     </div>
 
-    <div class="flex gap-1 mb-8 bg-gray-100 p-1 rounded-lg w-fit">
+    <div class="flex flex-wrap items-center gap-2 mb-8 bg-gray-100 p-1 rounded-lg w-full md:w-fit">
       <a routerLink="/account/overview" routerLinkActive="bg-white shadow-sm"
-         class="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all">
+         class="inline-flex items-center gap-2 px-3 py-2 md:px-4 rounded-md text-xs md:text-sm font-medium transition-all basis-1/2 sm:basis-auto shrink min-w-0">
         <i class="fa-solid fa-user w-4 h-4"></i>
-        <span>{{ 'overview' | t }}</span>
+        <span class="truncate">{{ 'overview' | t }}</span>
       </a>
       <a routerLink="/account/orders" routerLinkActive="bg-white shadow-sm"
-         class="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all">
+         class="inline-flex items-center gap-2 px-3 py-2 md:px-4 rounded-md text-xs md:text-sm font-medium transition-all basis-1/2 sm:basis-auto shrink min-w-0">
         <i class="fa-solid fa-box w-4 h-4"></i>
-        <span>{{ 'orders' | t }}</span>
+        <span class="truncate">{{ 'orders' | t }}</span>
       </a>
       <a routerLink="/account/addresses" routerLinkActive="bg-white shadow-sm"
-         class="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all">
+         class="inline-flex items-center gap-2 px-3 py-2 md:px-4 rounded-md text-xs md:text-sm font-medium transition-all basis-1/2 sm:basis-auto shrink min-w-0">
         <i class="fa-solid fa-location-dot w-4 h-4"></i>
-        <span>{{ 'addresses' | t }}</span>
+        <span class="truncate">{{ 'addresses' | t }}</span>
       </a>
       <a routerLink="/account/payments" routerLinkActive="bg-white shadow-sm"
-         class="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all">
+         class="inline-flex items-center gap-2 px-3 py-2 md:px-4 rounded-md text-xs md:text-sm font-medium transition-all basis-1/2 sm:basis-auto shrink min-w-0">
         <i class="fa-solid fa-credit-card w-4 h-4"></i>
-        <span>{{ 'payments' | t }}</span>
+        <span class="truncate">{{ 'payments' | t }}</span>
       </a>
       <a routerLink="/account/profile" routerLinkActive="bg-white shadow-sm"
-         class="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all">
+         class="inline-flex items-center gap-2 px-3 py-2 md:px-4 rounded-md text-xs md:text-sm font-medium transition-all basis-1/2 sm:basis-auto shrink min-w-0">
         <i class="fa-solid fa-gear w-4 h-4"></i>
-        <span>{{ 'profile' | t }}</span>
+        <span class="truncate">{{ 'profile' | t }}</span>
       </a>
     </div>
 
